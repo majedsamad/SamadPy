@@ -22,96 +22,37 @@ board = [
     "|",
     "_",
 ]
-print(str(board[0]) + str(board[1]) + str(board[2]) + str(board[3]) + str(board[4]))
-print(str(board[5]) + str(board[6]) + str(board[7]) + str(board[8]) + str(board[9]))
-print(
-    str(board[10]) + str(board[11]) + str(board[12]) + str(board[13]) + str(board[14])
-)
 
-# Move definition
-moves = {1: 0, 2: 2, 3: 4, 4: 5, 5: 7, 6: 9, 7: 10, 8: 12, 9: 14}
-mem = []
+
+def PrintBoard():
+    print("".join(board[:5]))
+    print("".join(board[5:10]))
+    print("".join(board[10:15]))
+
+
+def GetAndCheckInput(symbol):
+    moves_dict = {1: 0, 2: 2, 3: 4, 4: 5, 5: 7, 6: 9, 7: 10, 8: 12, 9: 14}
+    user_input = input()
+    while not isinstance(user_input, int) or user_input in prev_inputs:
+        print("Invalid entry; enter value between 1 and 9\n")
+        user_input = input()
+    board[moves_dict[user_input]] = symbol
+    prev_inputs.append(user_input)
+
+
+PrintBoard()
+prev_inputs = []
 nums = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
 # Game start
 for i in range(9):
     if i % 2 == 0:
         print("Player 1, enter a move (1-9)\n")
-        x = input()
-        try:
-            x = int(x)
-        except:
-            x = ""
-        while x == "" or x in mem:
-            print("Invalid entry; enter value between 1 and 9\n")
-            x = input(x)
-            try:
-                x = int(x)
-            except:
-                x = ""
-        board[moves[x]] = "X"
-        mem.append(x)
-        print(
-            str(board[0])
-            + str(board[1])
-            + str(board[2])
-            + str(board[3])
-            + str(board[4])
-        )
-        print(
-            str(board[5])
-            + str(board[6])
-            + str(board[7])
-            + str(board[8])
-            + str(board[9])
-        )
-        print(
-            str(board[10])
-            + str(board[11])
-            + str(board[12])
-            + str(board[13])
-            + str(board[14])
-        )
-
+        GetAndCheckInput("X")
+        PrintBoard()
     else:
         print("Player 2, enter a move (1-9)\n")
-        x = input()
-        try:
-            x = int(x)
-        except:
-            x = ""
-        while x == "" or x in mem:
-            print("Invalid entry; enter value between 1 and 9\n")
-            x = input(x)
-            try:
-                x = int(x)
-            except:
-                x = ""
-        board[moves[x]] = "O"
-        mem.append(x)
-
-        print(
-            str(board[0])
-            + str(board[1])
-            + str(board[2])
-            + str(board[3])
-            + str(board[4])
-        )
-        print(
-            str(board[5])
-            + str(board[6])
-            + str(board[7])
-            + str(board[8])
-            + str(board[9])
-        )
-        print(
-            str(board[10])
-            + str(board[11])
-            + str(board[12])
-            + str(board[13])
-            + str(board[14])
-        )
-        
+        GetAndCheckInput("O")
+        PrintBoard()
     # Victory Conditions - within for loop
     if (
         (board[0] == "X" and board[7] == "X" and board[14] == "X")
@@ -137,5 +78,5 @@ for i in range(9):
     ):
         print("Player 2 has won!!")
         break
-    elif len(mem) == 9:
+    elif len(prev_inputs) == 9:
         print("It's a draw!")
