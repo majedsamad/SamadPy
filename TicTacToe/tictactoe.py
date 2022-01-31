@@ -33,9 +33,17 @@ def PrintBoard():
 def GetAndCheckInput(symbol):
     moves_dict = {1: 0, 2: 2, 3: 4, 4: 5, 5: 7, 6: 9, 7: 10, 8: 12, 9: 14}
     user_input = input()
-    while not isinstance(user_input, int) or user_input in prev_inputs:
+    try:
+        user_input = int(user_input)
+    except:
+        user_input = 0
+    while user_input not in nums or user_input in prev_inputs:
         print("Invalid entry; enter value between 1 and 9\n")
         user_input = input()
+        try:
+            user_input = int(user_input)
+        except:
+            user_input = 0
     board[moves_dict[user_input]] = symbol
     prev_inputs.append(user_input)
 
